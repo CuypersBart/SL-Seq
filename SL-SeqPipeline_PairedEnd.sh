@@ -1,3 +1,4 @@
+#!/bin/bash
 #This script will automatically find paired end reads that are named according to illumina conventional and generate gene count tables for a specified reference genome and annotation file
 #The script will first align the reads to the reference genome of the host cell, after which the unmapped reads will be mapped to the parasite reference genome and a count table will be generated
 #pipeline tested with TopHat 2.1.0, Java 1.8.0_45, Pysam 0.9.1.4, HTSeq/0.6.1, Python-2.7.9, samtools-1.3.1, Trimmomatic 035, bwa 0.7.15
