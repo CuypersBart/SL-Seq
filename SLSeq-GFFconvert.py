@@ -69,9 +69,16 @@ for chromosome in LiChromosomes:
 removelist = []
 
 for chromosome in LiChromosomes:
+    length = len(Genelists[chromosome])
+    if length == 1:
+        gene=Genelists[chromosome][0]
+        if gene.strand == '+':
+            Genelists[chromosome][0].start_min = 1
+        elif gene.strand == '-':
+            Genelists[chromosome][0].stop_max = gene.stop_max+500
+        print("warning chromosome "+ str(gene.chromosome) + " contains only 1 gene!")
     for i in range(len(Genelists[chromosome])):
         overlap = False
-        length=len(Genelists[chromosome])
         gene = Genelists[chromosome][i]
         if i == 0:
             if gene.stop_max >= Genelists[chromosome][i+1].start_min:
