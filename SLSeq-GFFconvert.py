@@ -77,38 +77,39 @@ for chromosome in LiChromosomes:
         elif gene.strand == '-':
             Genelists[chromosome][0].stop_max = gene.stop_max+500
         print("warning chromosome "+ str(gene.chromosome) + " contains only 1 gene!")
-    for i in range(len(Genelists[chromosome])):
-        overlap = False
-        gene = Genelists[chromosome][i]
-        if i == 0:
-            if gene.stop_max >= Genelists[chromosome][i+1].start_min:
-                removelist.append(gene.name)
-                overlap = True
-        elif i == int(length-1):
-            if gene.start_min <= Genelists[chromosome][i-1].stop_max:
-                removelist.append(gene.name)
-                overlap = True
-        elif gene.stop_max >= Genelists[chromosome][i+1].start_min or gene.start_min <= Genelists[chromosome][i-1].stop_max:
-                removelist.append(gene.name)
-                overlap = True
-        if overlap == False:
-            if i == 0 and gene.strand == '+':
-                Genelists[chromosome][i].start_min = 1
-            elif i == 0 and gene.strand == '-':
-                Genelists[chromosome][i].stop_max = Genelists[chromosome][i+1].start_min-1
-            elif gene.strand == '+' and Genelists[chromosome][i-1].strand == "-":
-                numb=(gene.start_min-Genelists[chromosome][i-1].stop_max2)/2
-                Genelists[chromosome][i-1].stop_max = Genelists[chromosome][i-1].stop_max2 + numb
-                Genelists[chromosome][i].start_min = Genelists[chromosome][i].start_min - numb
-            elif gene.strand == '+':
-                Genelists[chromosome][i].start_min = Genelists[chromosome][i-1].stop_max-1
-            elif gene.strand == "-" and i == int(length-1):
-                 Genelists[chromosome][i].stop_max = gene.stop_max+500
-            elif gene.strand == "-":
-                Genelists[chromosome][i].stop_max = Genelists[chromosome][i+1].start_min-1
-            else:
-                print(gene.strand)
-                print('Warning gene ' + gene.name + ' lacks strand annotation')
+    else:
+        for i in range(len(Genelists[chromosome])):
+            overlap = False
+            gene = Genelists[chromosome][i]
+            if i == 0:
+                if gene.stop_max >= Genelists[chromosome][i+1].start_min:
+                    removelist.append(gene.name)
+                    overlap = True
+            elif i == int(length-1):
+                if gene.start_min <= Genelists[chromosome][i-1].stop_max:
+                    removelist.append(gene.name)
+                    overlap = True
+            elif gene.stop_max >= Genelists[chromosome][i+1].start_min or gene.start_min <= Genelists[chromosome][i-1].stop_max:
+                    removelist.append(gene.name)
+                    overlap = True
+            if overlap == False:
+                if i == 0 and gene.strand == '+':
+                    Genelists[chromosome][i].start_min = 1
+                elif i == 0 and gene.strand == '-':
+                    Genelists[chromosome][i].stop_max = Genelists[chromosome][i+1].start_min-1
+                elif gene.strand == '+' and Genelists[chromosome][i-1].strand == "-":
+                    numb=(gene.start_min-Genelists[chromosome][i-1].stop_max2)/2
+                    Genelists[chromosome][i-1].stop_max = Genelists[chromosome][i-1].stop_max2 + numb
+                    Genelists[chromosome][i].start_min = Genelists[chromosome][i].start_min - numb
+                elif gene.strand == '+':
+                    Genelists[chromosome][i].start_min = Genelists[chromosome][i-1].stop_max-1
+                elif gene.strand == "-" and i == int(length-1):
+                     Genelists[chromosome][i].stop_max = gene.stop_max+500
+                elif gene.strand == "-":
+                    Genelists[chromosome][i].stop_max = Genelists[chromosome][i+1].start_min-1
+                else:
+                    print(gene.strand)
+                    print('Warning gene ' + gene.name + ' lacks strand annotation')
 
 if args.outputfile == None:
     outputfile = 'SL_' + args.GFF_file
